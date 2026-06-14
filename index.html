@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0a6ed1">
+  <title>Incident Management</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="shell-bar">
+    <a class="brand" href="./" aria-label="Incident Management home">
+      <span class="brand-mark" aria-hidden="true">IM</span>
+      <span>
+        <strong>Incident Management</strong>
+        <small>CLD200 exercise application</small>
+      </span>
+    </a>
+    <div class="shell-actions">
+      <span class="storage-status" title="Data is stored in this browser">Local demo data</span>
+      <button id="reset-data" class="button button-ghost" type="button">Reset sample data</button>
+    </div>
+  </header>
+
+  <main class="page">
+    <section class="hero" aria-labelledby="page-title">
+      <div>
+        <p class="eyebrow">SAP BTP learning project</p>
+        <h1 id="page-title">Service incidents</h1>
+        <p>Track customer issues, priority, progress, and the conversation history.</p>
+      </div>
+      <button id="create-incident" class="button button-primary" type="button">Create incident</button>
+    </section>
+
+    <section class="filter-card" aria-label="Incident filters">
+      <label class="search-field">
+        <span>Search</span>
+        <input id="search" type="search" placeholder="Title, customer, email..." autocomplete="off">
+      </label>
+      <label>
+        <span>Status</span>
+        <select id="status-filter">
+          <option value="">All statuses</option>
+          <option value="N">New</option>
+          <option value="I">In progress</option>
+          <option value="C">Closed</option>
+        </select>
+      </label>
+      <label>
+        <span>Urgency</span>
+        <select id="urgency-filter">
+          <option value="">All urgency levels</option>
+          <option value="H">High</option>
+          <option value="M">Medium</option>
+          <option value="L">Low</option>
+        </select>
+      </label>
+      <button id="clear-filters" class="button button-secondary" type="button">Clear</button>
+    </section>
+
+    <section class="content-card" aria-labelledby="incident-heading">
+      <div class="section-heading">
+        <div>
+          <h2 id="incident-heading">Incidents</h2>
+          <p id="result-count" aria-live="polite"></p>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Customer</th>
+              <th>Status</th>
+              <th>Urgency</th>
+              <th>Updated</th>
+              <th><span class="sr-only">Actions</span></th>
+            </tr>
+          </thead>
+          <tbody id="incident-rows"></tbody>
+        </table>
+      </div>
+      <div id="empty-state" class="empty-state" hidden>
+        <strong>No matching incidents</strong>
+        <p>Clear the filters or create a new incident.</p>
+      </div>
+    </section>
+  </main>
+
+  <dialog id="incident-dialog" class="dialog">
+    <form id="incident-form" method="dialog">
+      <div class="dialog-heading">
+        <div>
+          <p class="eyebrow">Incident record</p>
+          <h2 id="form-title">Create incident</h2>
+        </div>
+        <button class="icon-button" value="cancel" aria-label="Close" type="submit">&times;</button>
+      </div>
+      <input id="incident-id" type="hidden">
+      <div class="form-grid">
+        <label class="wide">
+          <span>Title</span>
+          <input id="incident-title" required maxlength="100">
+        </label>
+        <label>
+          <span>Customer name</span>
+          <input id="customer-name" required maxlength="80">
+        </label>
+        <label>
+          <span>Customer email</span>
+          <input id="customer-email" type="email" required maxlength="120">
+        </label>
+        <label>
+          <span>Status</span>
+          <select id="incident-status" required>
+            <option value="N">New</option>
+            <option value="I">In progress</option>
+            <option value="C">Closed</option>
+          </select>
+        </label>
+        <label>
+          <span>Urgency</span>
+          <select id="incident-urgency" required>
+            <option value="H">High</option>
+            <option value="M">Medium</option>
+            <option value="L">Low</option>
+          </select>
+        </label>
+        <label class="wide">
+          <span>Description</span>
+          <textarea id="incident-description" rows="5" required maxlength="600"></textarea>
+        </label>
+      </div>
+      <div class="dialog-actions">
+        <button class="button button-secondary" value="cancel" type="submit">Cancel</button>
+        <button id="save-incident" class="button button-primary" value="default" type="submit">Save incident</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="detail-dialog" class="dialog dialog-detail">
+    <div id="detail-content"></div>
+  </dialog>
+
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+
+  <script type="module" src="app.mjs"></script>
+</body>
+</html>
